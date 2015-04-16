@@ -8,6 +8,7 @@ alias gpo='git status | grep "On branch " | awk "{print \$NF}" | xargs git push 
 
 # Checks out master, merges in upstream/master, and pushes to origin
 alias gum='git checkout master && git fetch upstream && git merge upstream/master && git push origin master'
+alias guf='git checkout future-develop && git fetch upstream && git merge upstream/future-develop && git push origin future-develop'
 
 # Shows all files that match gss grep
 function gsg {
