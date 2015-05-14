@@ -27,5 +27,5 @@ if __name__ == '__main__':
   for errorFile in find_violations_recursively(os.getcwd()):
     print(errorFile['filename'])
     for error in errorFile['errors']:
-      print('  line: ' + error['line'] + ' column: ' + error['column'] + ' message: ' + error['message'])
+      print('  line: ' + str(error['line']) + ' column: ' + str(error['column']) + ' message: ' + str(error['message']))
     print('')

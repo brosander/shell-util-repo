@@ -9,11 +9,12 @@ def find_coverage_file(rootDir, filename):
   results = []
   for clazz in tree.getroot().iter('class'):
     clazzMetrics = { 'name': clazz.get('name'), 'hits': 0, 'misses' : 0 }
-    for line in clazz.iter('line'):
-      if str(line.get('hits')) == '0':
-        clazzMetrics['misses'] += 1
-      else:
-        clazzMetrics['hits'] += 1
+    for lines in clazz.findall('lines'):
+      for line in lines.findall('line'):
+        if str(line.get('hits')) == '0':
+          clazzMetrics['misses'] += 1
+        else:
+          clazzMetrics['hits'] += 1
     results.append(clazzMetrics)
   return results
 
