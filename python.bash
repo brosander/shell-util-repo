@@ -10,3 +10,5 @@ prcheck() {
   fi
   git diff --stat=10000 --relative "$COMMIT" | head -n-1 | awk '{print $1}' | xargs checkstyle.py
 }
+
+alias pyserve='python -m SimpleHTTPServer'
