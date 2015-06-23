@@ -29,7 +29,11 @@ def find_violations_recursively(rootDir, fileFilter):
 if __name__ == '__main__':
   fileFilter = None
   if len(sys.argv) > 1:
-    fileFilter = set([filename for filename in sys.argv[1:]])
+    fileList = [filename for filename in sys.argv[1:]]
+    print('Searching for checkstyle errors in the following files: ')
+    for fileName in fileList:
+      print('  ' + str(fileName))
+    fileFilter = set(fileList)
   for errorFile in find_violations_recursively(os.getcwd(), fileFilter):
     print(errorFile['filename'])
     for error in errorFile['errors']:
