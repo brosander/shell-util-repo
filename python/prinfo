@@ -1,0 +1,45 @@
+#!/usr/bin/python
+
+import argparse
+import json
+try:
+  from urllib2 import urlopen, Request, HTTPError
+except ImportError:
+  from urllib.request import urlopen, Request, HTTPError
+
+def get_response(request, timeout = 60):
+  return urlopen(request, timeout = timeout)
+
+def get_response_json(request, timeout = 60):
+  response = get_response(request, timeout)
+  charset = 'UTF-8'
+  content_type = response.info().get('Content-Type').split(';')
+  for info in content_type:
+    if info.startswith('charset='):
+      charset = info.split('=')[-1]
+  return json.loads(response.read().decode(charset, 'strict'))
+
+if __name__ == '__main__':
+  parser = argparse.ArgumentParser(description='''
+  This script will print metadata about a pull request
+  ''', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+  parser.add_argument("-o", "--owner", default="pentaho", help="Repository owner")
+  parser.add_argument("-r", "--repo", default="pentaho-kettle", help="Repository")
+  parser.add_argument("-p", "--pullRequest", help="Pull request number")
+  parser.add_argument("-c", "--commits", action="store_true", help="Commit metadata")
+  parser.add_argument("-l", "--length", action="store_true", help="Only print length of response")
+  parser.add_argument("-j", "--path", help=". separated path to property")
+  args = parser.parse_args()
+  if not args.pullRequest:
+    raise Exception('Pull request number required.')
+  url_parts = ['https://api.github.com/repos/', args.owner, '/', args.repo, '/pulls/', args.pullRequest]
+  if args.commits:
+    url_parts.append('/commits')
+  data = get_response_json(Request(''.join(url_parts)))
+  if args.path:
+    for elem in args.path.split('.'):
+      data = data[elem]
+  if args.length:
+    print(str(len(data)))
+  else:
+    print(str(json.dumps(data)))
