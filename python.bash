@@ -8,7 +8,7 @@ prcheck() {
   else
     COMMIT="$1"
   fi
-  git diff --stat=10000 --relative "$COMMIT" | head -n-1 | awk '{print $1}' | xargs checkstyle.py
+  git diff --name-only --relative "$COMMIT" | tr '\n' '\0' | xargs -0 checkstyle.py
 }
 
 alias pyserve='python -m SimpleHTTPServer'
