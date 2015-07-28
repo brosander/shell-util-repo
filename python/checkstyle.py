@@ -34,6 +34,7 @@ if __name__ == '__main__':
     for fileName in fileList:
       print('  ' + str(fileName))
     fileFilter = set(fileList)
+    print('')
   for errorFile in find_violations_recursively(os.getcwd(), fileFilter):
     print(errorFile['filename'])
     for error in errorFile['errors']:
