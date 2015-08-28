@@ -19,3 +19,12 @@ function gsg {
 function gbc {
   gsg "$1" | xargs git "$2"
 }
+
+function gstat {
+  if [ -z "$1" ]; then
+    COMMIT="HEAD~1"
+  else
+    COMMIT="$1"
+  fi
+  git diff --name-only --relative "$COMMIT"
+}
