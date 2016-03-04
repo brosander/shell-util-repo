@@ -28,3 +28,19 @@ function gstat {
   fi
   git diff --name-only --relative "$COMMIT"
 }
+
+function gh-clone {
+  if [ -z "$1" ]; then
+    echo "Repo name required"
+  else
+    if [ -z "$2" ]; then
+      PARENT="pentaho"
+    else
+      PARENT="$2"
+    fi
+    cd ~/github
+    git clone git@github.com:"$GITHUB_USER_NAME"/"$1".git \
+      && cd "$1" \
+      && git remote add upstream git@github.com:"$PARENT"/"$1".git
+  fi
+}
