@@ -10,6 +10,14 @@ alias gpo='git status | grep "On branch " | awk "{print \$NF}" | xargs git push 
 alias gum='git checkout master && git fetch upstream && git merge upstream/master && git push origin master'
 alias guf='git checkout future-develop && git fetch upstream && git merge upstream/future-develop && git push origin future-develop'
 
+function gpr() {
+  if [ -z "$1" ]; then
+    echo "PR number required as \$1"
+  else
+    git fetch upstream pull/"$1"/head:pr"$1" && git checkout pr"$1"
+  fi
+}
+
 # Shows all files that match gss grep
 function gsg {
   gss | grep "$1" | awk '{print $NF}'
