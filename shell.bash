@@ -24,3 +24,12 @@ function fe() {
     fi
   fi
 }
+
+function mcd() {
+  if [ -z "$1" ]; then
+    echo "Usage: mcd DIR_NAME"
+    echo "    Creates a directory and cds into it"
+  else
+    mkdir "$1" && cd "$1"
+  fi
+}
