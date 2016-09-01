@@ -1,9 +1,9 @@
 #!/bin/bash
 
-DIR_ALIASES=~/.shell_util_dir_aliases
+SHELL_UTIL_DIR_ALIASES_DIR=~/.shell_util_dir_aliases
 
-if [ ! -d "$DIR_ALIASES" ]; then
-  mkdir "$DIR_ALIASES"
+if [ ! -d "$SHELL_UTIL_DIR_ALIASES_DIR" ]; then
+  mkdir "$SHELL_UTIL_DIR_ALIASES_DIR"
 fi
 
 function fe() {
@@ -45,7 +45,7 @@ function l() {
     echo "Usage: l ALIAS"
     echo "    cds into the directory stored with this alias"
   else
-    local ALIAS_FILE="$DIR_ALIASES/$(basename "$1")"
+    local ALIAS_FILE="$SHELL_UTIL_DIR_ALIASES_DIR/$(basename "$1")"
     if [ -f "$ALIAS_FILE" ]; then
       cd "$(cat "$ALIAS_FILE")"
     else
@@ -59,7 +59,7 @@ function s() {
     echo "Usage: s ALIAS"
     echo "    stores the current directory as the specified alias"
   else
-    local ALIAS_FILE="$DIR_ALIASES/$(basename "$1")"
+    local ALIAS_FILE="$SHELL_UTIL_DIR_ALIASES_DIR/$(basename "$1")"
     pwd > "$ALIAS_FILE"
   fi
 }
@@ -69,16 +69,16 @@ function d() {
     echo "Usage: d ALIAS"
     echo "    deletes the specified directory alias"
   else
-    local ALIAS_FILE="$DIR_ALIASES/$(basename "$1")"
+    local ALIAS_FILE="$SHELL_UTIL_DIR_ALIASES_DIR/$(basename "$1")"
     rm -f "$ALIAS_FILE"
   fi
 }
 
 function p() {
   if [ -z "$1" ]; then
-    find "$DIR_ALIASES" -maxdepth 1 -type f -print0 | xargs -0 -I {} bash -c 'echo "$(basename "$0"): $(cat "$0")"' {} | sort
+    find "$SHELL_UTIL_DIR_ALIASES_DIR" -maxdepth 1 -type f -print0 | xargs -0 -I {} bash -c 'echo "$(basename "$0"): $(cat "$0")"' {} | sort
   else
-    local ALIAS_FILE="$DIR_ALIASES/$(basename "$1")"
+    local ALIAS_FILE="$SHELL_UTIL_DIR_ALIASES_DIR/$(basename "$1")"
     if [ -f "$ALIAS_FILE" ]; then
       echo "$1: $(cat "$ALIAS_FILE")"
     else
