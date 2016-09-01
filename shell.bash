@@ -80,7 +80,7 @@ function p() {
   else
     local ALIAS_FILE="$SHELL_UTIL_DIR_ALIASES_DIR/$(basename "$1")"
     if [ -f "$ALIAS_FILE" ]; then
-      echo "$1: $(cat "$ALIAS_FILE")"
+      echo "$(cat "$ALIAS_FILE")"
     else
       echo "$1: undefined"
     fi
