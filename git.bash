@@ -7,8 +7,17 @@ alias gss='git status -s'
 alias gpo='git status | grep "On branch " | awk "{print \$NF}" | xargs git push origin'
 
 # Checks out master, merges in upstream/master, and pushes to origin
-alias gum='git checkout master && git fetch upstream && git merge upstream/master && git push origin master'
-alias guf='git checkout future-develop && git fetch upstream && git merge upstream/future-develop && git push origin future-develop'
+alias gum='gu master'
+alias guf='gu future-develop'
+
+function gu () {
+  if [ -z "$1" ]; then
+    echo "Usage gu BRANCH_NAME"
+    echo "    Checks out fetches upstream, merges, pushes to origin."
+  else
+    git checkout "$1" && git fetch upstream "$1" && git merge upstream/"$1" && git push origin "$1"
+  fi
+}
 
 function gpr() {
   if [ -z "$1" ]; then
