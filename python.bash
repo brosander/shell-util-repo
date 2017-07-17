@@ -1,6 +1,10 @@
 #!/bin/bash
 
-export PATH="$PATH:`dirname ${BASH_SOURCE[0]}`/python"
+if [ "$(basename "$SHELL")" = "bash" ]; then
+  export PATH="$PATH:`dirname ${BASH_SOURCE[0]}`/python"
+else
+  export PATH="$PATH:$(dirname "$0")/python"
+fi
 
 prcheck() {
   if [ -z "$1" ]; then
